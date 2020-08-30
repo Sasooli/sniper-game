@@ -33,4 +33,22 @@ export default class BoardPieces {
             console.error(`You tried to move a piece at (${xFrom}, ${yFrom}), but there is no piece there!`);
         }
     }
+
+    public flipPiece(xPosition: number, yPosition: number): void {
+        try {
+            this.findPieceAt(xPosition, yPosition)?.flip();
+        }
+        catch(error) {
+            console.error(`You tried to flip a piece at (${xPosition}, ${yPosition}), but there is no piece there!`);
+        }
+    }
+
+    public removePiece(xPosition: number, yPosition: number): void {
+        // TODO: Error handling
+        this.pieceList.splice(
+            this.pieceList
+                .findIndex(piece => piece.getXPosition() === xPosition && piece.getYPosition() === yPosition),
+            1
+        );
+    }
 }
