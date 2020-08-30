@@ -1,4 +1,4 @@
-export class GamePiece {
+export default class GamePiece {
     private xPosition: number;
     private yPosition: number;
     private isFlipped: boolean;
