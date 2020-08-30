@@ -11,6 +11,14 @@ export default class GamePiece {
         this.isFlipped = isFlipped;
     }
 
+    public getXPosition(): number {
+        return this.xPosition;
+    }
+
+    public getYPosition(): number {
+        return this.yPosition;
+    }
+
     public getCoordinates(): [number, number] {
         return [this.xPosition, this.yPosition];
     }
