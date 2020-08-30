@@ -10,6 +10,9 @@ function App() {
   boardState.setTerrain(1,1, TerrainTypes.Rubble);
   boardState.setTerrain(3,1, TerrainTypes.Rubble);
   boardState.setTerrain(3,3, TerrainTypes.Building);
+  boardState.setTerrain(0,4, TerrainTypes.Building);
+  boardState.setTerrain(0,5, TerrainTypes.Tower);
+  boardState.setTerrain(1,5, TerrainTypes.Building);
   return (
     <div className="App">
         <Board boardState={boardState} />
