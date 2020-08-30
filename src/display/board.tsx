@@ -11,9 +11,9 @@ function Board({boardState}: BoardProps) {
     const terrain = boardState.getAllTerrain();
     return (
         <div className={'grid-container'}>
-            {terrain.map((terrainRow, rowIndex) => (
-                <div className='grid-row'>
-                {terrainRow.map((terrainType, colIndex) =>
+            {terrain.map((terrainCol, colIndex) => (
+                <div className='grid-col'>
+                {terrainCol.map((terrainType, rowIndex) =>
                     <Square terrainType={terrainType} xCoord={colIndex} yCoord={rowIndex} />
                     )}
                 </div>
