@@ -25,7 +25,11 @@ function Square({terrainType, xCoord, yCoord, piece}: SquareProps) {
     return (
         <div className='grid-item'>
             {terrainIcon && <FontAwesomeIcon icon={terrainIcon} className='terrain-icon' />}
-            {pieceProperties && <FontAwesomeIcon icon={pieceProperties.icon} className={pieceProperties.class} />}
+            {pieceProperties &&
+                <div className={'piece-container'}>
+                    <FontAwesomeIcon icon={pieceProperties.icon} className={pieceProperties.class} />
+                </div>
+            }
         </div>
     )
 }

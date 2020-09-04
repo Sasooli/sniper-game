@@ -19,6 +19,8 @@ function App() {
   boardPieces.placeNewPiece(0,0, PieceType.Soldier);
   boardPieces.placeNewPiece(0,1, PieceType.Soldier);
   boardPieces.placeNewPiece(3,5, PieceType.Sniper);
+  boardPieces.placeNewPiece(0,4, PieceType.Sniper);
+  boardPieces.placeNewPiece(3,1, PieceType.Soldier);
   return (
     <div className="App">
         <Board boardState={boardState} boardPieces={boardPieces} />
