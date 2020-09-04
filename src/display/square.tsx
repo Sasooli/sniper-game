@@ -15,20 +15,20 @@ export type SquareProps = {
 function Square({terrainType, xCoord, yCoord, piece}: SquareProps) {
     const terrainIcon =
         terrainType === TerrainTypes.Building ? faHome
-        : terrainType === TerrainTypes.Tower ? faBuilding
-        : terrainType === TerrainTypes.Rubble ? faStream
-        : null;
+            : terrainType === TerrainTypes.Tower ? faBuilding
+            : terrainType === TerrainTypes.Rubble ? faStream
+            : null;
     const pieceProperties =
-        piece?.getPieceType() == PieceType.Soldier ? { icon: faWalking, class: 'soldier-icon' }
-            : piece?.getPieceType() == PieceType.Sniper ? { icon: faCrosshairs, class: 'sniper-icon' }
+        piece?.getPieceType() === PieceType.Soldier ? { icon: faWalking, class: 'soldier-icon' }
+            : piece?.getPieceType() === PieceType.Sniper ? { icon: faCrosshairs, class: 'sniper-icon' }
             : null;
     return (
         <div className='grid-item'>
             {terrainIcon && <FontAwesomeIcon icon={terrainIcon} className='terrain-icon' />}
             {pieceProperties &&
-                <div className={'piece-container'}>
-                    <FontAwesomeIcon icon={pieceProperties.icon} className={pieceProperties.class} />
-                </div>
+            <div className={`piece-container ${piece?.getIsFlipped() ? 'flipped-piece-container' : ''}`}>
+                <FontAwesomeIcon icon={pieceProperties.icon} className={pieceProperties.class} />
+            </div>
             }
         </div>
     )
