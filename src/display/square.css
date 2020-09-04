@@ -12,3 +12,12 @@
 .terrain-icon {
     font-size: 35px;
 }
+
+.soldier-icon {
+    font-size: 20px;
+}
+
+.sniper-icon {
+    color: red;
+    font-size: 20px;
+}
