@@ -14,14 +14,15 @@ function Board({boardState, boardPieces}: BoardProps) {
     return (
         <div className={'grid-container'}>
             {terrain.map((terrainCol, colIndex) => (
-                <div key={colIndex} className='grid-col'>
+                <div className='grid-col' key={`col-${colIndex}`}>
                 {terrainCol.map((terrainType, rowIndex) =>
                     <Square
                         key={rowIndex}
                         terrainType={terrainType}
                         xCoord={colIndex}
                         yCoord={rowIndex}
-                        piece={boardPieces.findPieceAt(colIndex, rowIndex)} />
+                        piece={boardPieces.findPieceAt(colIndex, rowIndex)}
+                        key={`square-${colIndex}-${rowIndex}`} />
                     )}
                 </div>
             ))}
