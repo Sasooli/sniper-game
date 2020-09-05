@@ -15,7 +15,6 @@ function App() {
   boardState.setTerrain(0,5, TerrainTypes.Tower);
   boardState.setTerrain(1,5, TerrainTypes.Building);
   boardState.setTerrain(2,1, TerrainTypes.Building);
-  boardState.setTerrain(3,1, TerrainTypes.Building);
   //TODO: remove this hard-coded piece setup
   let boardPieces = new BoardPieces();
   boardPieces.placeNewPiece(0,0, PieceType.Soldier);
