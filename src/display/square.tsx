@@ -14,9 +14,9 @@ export type SquareProps = {
 
 function Square({terrainType, xCoord, yCoord}: SquareProps) {
     const terrainIcon =
-        terrainType == TerrainTypes.Building ? faHome
-        : terrainType == TerrainTypes.Tower ? faBuilding
-        : terrainType == TerrainTypes.Rubble ? faStream
+        terrainType === TerrainTypes.Building ? faHome
+        : terrainType === TerrainTypes.Tower ? faBuilding
+        : terrainType === TerrainTypes.Rubble ? faStream
         : null;
     return (
         <div className='grid-item'>
