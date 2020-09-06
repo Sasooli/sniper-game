@@ -1,0 +1,14 @@
+.grid-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: lightgrey;
+    border-radius: 3px;
+    width: 60px;
+    height: 60px;
+    margin: 2px;
+}
+
+.terrain-icon {
+    font-size: 35px;
+}

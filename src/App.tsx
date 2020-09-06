@@ -1,24 +1,20 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Board from './display/board';
+import BoardState, {TerrainTypes} from './game-state/BoardState';
 
 function App() {
+  //TOD: remove this hard-coded terrain setup
+  let boardState = new BoardState(4, 6);
+  boardState.setTerrain(1,1, TerrainTypes.Rubble);
+  boardState.setTerrain(3,1, TerrainTypes.Rubble);
+  boardState.setTerrain(3,3, TerrainTypes.Building);
+  boardState.setTerrain(0,4, TerrainTypes.Building);
+  boardState.setTerrain(0,5, TerrainTypes.Tower);
+  boardState.setTerrain(1,5, TerrainTypes.Building);
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+        <Board boardState={boardState} />
     </div>
   );
 }

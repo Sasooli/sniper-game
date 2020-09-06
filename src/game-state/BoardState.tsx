@@ -1,11 +1,17 @@
 export default class BoardState {
-    private boardWidth: number;
-    private boardHeight: number;
-    private terrain: TerrainTypes[][];
+    get boardHeight(): number {
+        return this._boardHeight;
+    }
+    get boardWidth(): number {
+        return this._boardWidth;
+    }
+    private readonly _boardWidth: number;
+    private readonly _boardHeight: number;
+    private readonly terrain: TerrainTypes[][];
 
     constructor(boardWidth: number, boardHeight: number) {
-        this.boardWidth = boardWidth;
-        this.boardHeight = boardHeight;
+        this._boardWidth = boardWidth;
+        this._boardHeight = boardHeight;
         this.terrain = Array(boardWidth).fill(0).map(() => Array(boardHeight).fill(TerrainTypes.Open));
     }
 
@@ -15,6 +21,10 @@ export default class BoardState {
 
     public setTerrain(x: number, y: number, terrain: TerrainTypes) {
         this.terrain[x][y] = terrain;
+    }
+
+    public getAllTerrain(): TerrainTypes[][] {
+        return this.terrain;
     }
 }
 
