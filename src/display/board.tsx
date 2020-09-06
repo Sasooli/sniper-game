@@ -12,9 +12,9 @@ function Board({boardState}: BoardProps) {
     return (
         <div className={'grid-container'}>
             {terrain.map((terrainCol, colIndex) => (
-                <div className='grid-col'>
+                <div key={colIndex} className='grid-col'>
                 {terrainCol.map((terrainType, rowIndex) =>
-                    <Square terrainType={terrainType} xCoord={colIndex} yCoord={rowIndex} />
+                    <Square key={rowIndex} terrainType={terrainType} xCoord={colIndex} yCoord={rowIndex} />
                     )}
                 </div>
             ))}
