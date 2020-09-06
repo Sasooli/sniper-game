@@ -1,3 +1,10 @@
+export enum TerrainTypes {
+    Open,
+    Rubble,
+    Building,
+    Tower
+}
+
 export default class BoardState {
     get boardHeight(): number {
         return this._boardHeight;
@@ -26,11 +33,4 @@ export default class BoardState {
     public getAllTerrain(): TerrainTypes[][] {
         return this.terrain;
     }
-}
-
-export enum TerrainTypes {
-    Open,
-    Rubble,
-    Building,
-    Tower
 }
