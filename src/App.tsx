@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import './App.css';
+import {cloneDeep} from 'lodash';
 import Board from './display/board';
 import BoardState, {TerrainTypes} from './game-state/BoardState';
 import BoardPieces from './game-state/BoardPieces';
@@ -8,7 +9,7 @@ import Controls from './display/controls';
 
 function App() {
   //TODO: remove this hard-coded terrain setup
-  let boardState = new BoardState(4, 6);
+  let initialBoardState = new BoardState(4, 6);
   initialBoardState.setTerrain(1,1, TerrainTypes.Rubble);
   initialBoardState.setTerrain(3,1, TerrainTypes.Rubble);
   initialBoardState.setTerrain(3,3, TerrainTypes.Building);
@@ -25,11 +26,16 @@ function App() {
   boardPieces.placeNewPiece(3,1, PieceType.Soldier);
   boardPieces.placeNewPiece(2,0, PieceType.Sniper, true);
   boardPieces.placeNewPiece(3,0, PieceType.Soldier, true);
-  const [ boardState ] = useState<BoardState>(initialBoardState);
+  
+  const [ boardState, setBoardState ] = useState<BoardState>(initialBoardState);
 
   const [ terrainMode, setTerrainMode ] = useState<TerrainTypes | undefined>(undefined);
   const placeTerrain = (x: number, y: number) => {
-    if (terrainMode !== undefined) boardState.setTerrain(x, y, terrainMode);
+    if (terrainMode !== undefined) {
+      let newBoardState = cloneDeep(boardState);
+      newBoardState.setTerrain(x, y, terrainMode);
+      setBoardState(newBoardState);
+    }
   }
   return (
     <div className='main-container'>

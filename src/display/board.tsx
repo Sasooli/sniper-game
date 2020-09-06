@@ -19,8 +19,6 @@ function Board({boardState, boardPieces, placeTerrain}: BoardProps) {
                 {terrainCol.map((terrainType, rowIndex) =>
                     <Square
                         terrainType={terrainType}
-                        xCoord={colIndex}
-                        yCoord={rowIndex}
                         piece={boardPieces.findPieceAt(colIndex, rowIndex)}
                         key={`square-${colIndex}-${rowIndex}`}
                         placeTerrainHere={() => placeTerrain(colIndex, rowIndex)}
