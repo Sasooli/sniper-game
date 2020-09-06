@@ -1,14 +1,49 @@
 .grid-item {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: lightgrey;
+    display: grid;
+    grid-template: 1fr / 1fr;
+    place-items: center;
+    background-color: rgb(230, 230, 230);
     border-radius: 3px;
     width: 60px;
     height: 60px;
     margin: 2px;
 }
 
+.grid-item > * {
+    grid-column: 1 / 1;
+    grid-row: 1 / 1;
+}
+
 .terrain-icon {
-    font-size: 35px;
+    position: relative;
+    font-size: 45px;
+    z-index: 1;
+    color: rgb(80, 80, 80);
+}
+
+.piece-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+    background-color: rgba(211, 211, 211, 1);
+    box-shadow: 2px 5px rgb(150, 150, 150);
+    width: 25px;
+    height: 25px;
+    border-radius: 10px;
+}
+
+.flipped-piece-container {
+    opacity: 0.3;
+}
+
+.soldier-icon {
+    color: blue;
+    font-size: 20px;
+}
+
+.sniper-icon {
+    color: red;
+    font-size: 20px;
 }
