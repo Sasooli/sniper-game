@@ -17,7 +17,6 @@ function Board({boardState, boardPieces}: BoardProps) {
                 <div className='grid-col' key={`col-${colIndex}`}>
                 {terrainCol.map((terrainType, rowIndex) =>
                     <Square
-                        key={rowIndex}
                         terrainType={terrainType}
                         xCoord={colIndex}
                         yCoord={rowIndex}
