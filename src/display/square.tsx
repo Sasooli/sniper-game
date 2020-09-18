@@ -26,8 +26,11 @@ function Square({terrainType, xCoord, yCoord, piece}: SquareProps) {
         <div className='grid-item'>
             {terrainIcon && <FontAwesomeIcon icon={terrainIcon} className='terrain-icon' />}
             {pieceProperties &&
-            <div className={`piece-container ${piece?.getIsFlipped() ? 'flipped-piece-container' : ''}`}>
-                <FontAwesomeIcon icon={pieceProperties.icon} className={pieceProperties.class} />
+            <div className='piece-container'>
+                <FontAwesomeIcon
+                    icon={pieceProperties.icon}
+                    className={`${pieceProperties.class} ${piece?.getIsFlipped() ? 'flipped-piece-icon' : ''}`}
+                />
             </div>
             }
         </div>
