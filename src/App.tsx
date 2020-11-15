@@ -7,6 +7,12 @@ import BoardPieces from './game-state/BoardPieces';
 import {PieceType} from './game-objects/GamePiece';
 import Controls from './display/controls';
 
+export enum ClickModes {
+  NONE,
+  SET_TERRAIN,
+  SET_PIECE
+}
+
 function App() {
   //TODO: remove this hard-coded terrain setup
   let initialBoardState = new BoardState(4, 6);
@@ -29,18 +35,24 @@ function App() {
   
   const [ boardState, setBoardState ] = useState<BoardState>(initialBoardState);
 
+  const [ clickMode, setClickMode ] = useState<ClickModes>(ClickModes.NONE);
   const [ terrainMode, setTerrainMode ] = useState<TerrainTypes | undefined>(undefined);
-  const placeTerrain = (x: number, y: number) => {
-    if (terrainMode !== undefined) {
-      let newBoardState = cloneDeep(boardState);
-      newBoardState.setTerrain(x, y, terrainMode);
-      setBoardState(newBoardState);
+
+  const squareClick = (x: number, y: number) => {
+    let newBoardState = cloneDeep(boardState);
+    switch (clickMode) {
+      case ClickModes.SET_PIECE:
+      case ClickModes.SET_TERRAIN:
+        if (terrainMode !== undefined) newBoardState.setTerrain(x, y, terrainMode);
+        break;
+      case ClickModes.NONE:
     }
+    setBoardState(newBoardState);
   }
   return (
     <div className='main-container'>
-      <Controls terrainMode={terrainMode} setTerrainMode={setTerrainMode}/>
-      <Board boardState={boardState} placeTerrain={placeTerrain} boardPieces={boardPieces} />
+      <Controls terrainMode={terrainMode} setTerrainMode={setTerrainMode} setClickMode={setClickMode}/>
+      <Board boardState={boardState} onSquareClick={squareClick} boardPieces={boardPieces} />
     </div>
   );
 }
