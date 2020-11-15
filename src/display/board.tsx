@@ -7,9 +7,10 @@ import BoardPieces from '../game-state/BoardPieces';
 export type BoardProps = {
     boardState: BoardState;
     boardPieces: BoardPieces;
+    placeTerrain: Function;
 }
 
-function Board({boardState, boardPieces}: BoardProps) {
+function Board({boardState, boardPieces, placeTerrain}: BoardProps) {
     const terrain = boardState.getAllTerrain();
     return (
         <div className={'grid-container'}>
@@ -18,10 +19,10 @@ function Board({boardState, boardPieces}: BoardProps) {
                 {terrainCol.map((terrainType, rowIndex) =>
                     <Square
                         terrainType={terrainType}
-                        xCoord={colIndex}
-                        yCoord={rowIndex}
                         piece={boardPieces.findPieceAt(colIndex, rowIndex)}
-                        key={`square-${colIndex}-${rowIndex}`} />
+                        key={`square-${colIndex}-${rowIndex}`}
+                        placeTerrainHere={() => placeTerrain(colIndex, rowIndex)}
+                    />
                     )}
                 </div>
             ))}
