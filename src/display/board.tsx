@@ -2,17 +2,16 @@ import React from 'react';
 import BoardState from '../game-state/BoardState';
 import './board.css';
 import Square from './square';
-import BoardPieces from '../game-state/BoardPieces';
 
 export type BoardProps = {
     boardState: BoardState;
-    boardPieces: BoardPieces;
     onSquareClick: Function;
     zoomLevel: number;
 }
 
-function Board({boardState, boardPieces, onSquareClick, zoomLevel}: BoardProps) {
+function Board({boardState, onSquareClick, zoomLevel}: BoardProps) {
     const terrain = boardState.getAllTerrain();
+    const pieces = boardState.getAllPieces();
     return (
         <div className={'grid-container'}>
             {terrain.map((terrainCol, colIndex) => (
@@ -20,7 +19,7 @@ function Board({boardState, boardPieces, onSquareClick, zoomLevel}: BoardProps) 
                 {terrainCol.map((terrainType, rowIndex) =>
                     <Square
                         terrainType={terrainType}
-                        piece={boardPieces.findPieceAt(colIndex, rowIndex)}
+                        piece={pieces[colIndex][rowIndex]}
                         key={`square-${colIndex}-${rowIndex}`}
                         onClick={() => onSquareClick(colIndex, rowIndex)}
                         zoomLevel={zoomLevel}
