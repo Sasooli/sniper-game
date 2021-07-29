@@ -60,7 +60,7 @@ function App() {
   }
   return (
     <div className='main-container'>
-      <Controls terrainMode={terrainMode} setTerrainMode={setTerrainMode} setClickMode={setClickMode} pieceMode={pieceMode} setPieceMode={setPieceMode}/>
+      <Controls terrainMode={terrainMode} setTerrainMode={setTerrainMode} clickMode={clickMode} setClickMode={setClickMode} pieceMode={pieceMode} setPieceMode={setPieceMode}/>
       <Board boardState={boardState} onSquareClick={squareClick} boardPieces={boardPieces} />
     </div>
   );

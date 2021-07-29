@@ -9,10 +9,11 @@ import './piece-controls.css';
 type PieceControlsProps = {
     pieceMode : PieceType | undefined;
     setPieceMode : React.Dispatch<React.SetStateAction<PieceType | undefined>>;
+    clickMode : ClickModes;
     setClickMode : React.Dispatch<React.SetStateAction<ClickModes>>;
 }
 
-function PieceControls({pieceMode, setPieceMode, setClickMode} : PieceControlsProps) {
+function PieceControls({pieceMode, setPieceMode, clickMode, setClickMode} : PieceControlsProps) {
 
     const pieceButton = (pieceType : PieceType | undefined, text: string, icon: IconDefinition | undefined) =>
         <button
@@ -20,7 +21,7 @@ function PieceControls({pieceMode, setPieceMode, setClickMode} : PieceControlsPr
                 setPieceMode(pieceType);
                 setClickMode(pieceType === undefined ? ClickModes.NONE : ClickModes.SET_PIECE);
             }}
-            className={`piece-button ${(pieceMode === pieceType) && (pieceType !== undefined)
+            className={`piece-button ${(clickMode === ClickModes.SET_PIECE) && (pieceMode === pieceType)
                 ? 'piece-button-active'
                 : 'piece-button-inactive'}`}
         >

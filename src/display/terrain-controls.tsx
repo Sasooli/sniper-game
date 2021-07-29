@@ -9,17 +9,18 @@ import './terrain-controls.css';
 type TerrainControlsProps = {
     terrainMode : TerrainTypes | undefined;
     setTerrainMode : React.Dispatch<React.SetStateAction<TerrainTypes | undefined>>;
+    clickMode : ClickModes;
     setClickMode : React.Dispatch<React.SetStateAction<ClickModes>>;
 }
 
-function TerrainControls({setTerrainMode, terrainMode, setClickMode} : TerrainControlsProps) {
+function TerrainControls({setTerrainMode, terrainMode, clickMode, setClickMode} : TerrainControlsProps) {
     const terrainButton = (terrainType : TerrainTypes | undefined, text: string, icon: IconDefinition | undefined) =>
         <button
             onClick={() => {
                 setTerrainMode(terrainType);
                 setClickMode(terrainType === undefined ? ClickModes.NONE : ClickModes.SET_TERRAIN);
             }}
-            className={`terrain-button ${(terrainMode === terrainType) && (terrainType !== undefined)
+            className={`terrain-button ${(clickMode === ClickModes.SET_TERRAIN) && (terrainMode === terrainType)
                 ? 'terrain-button-active'
                 : 'terrain-button-inactive'}`}
         >
