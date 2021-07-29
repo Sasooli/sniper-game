@@ -1,3 +1,5 @@
+import {MAXBOARDSIZE} from "../App";
+
 export enum TerrainTypes {
     Open,
     Rubble,
@@ -12,8 +14,8 @@ export default class BoardState {
     get boardWidth(): number {
         return this._boardWidth;
     }
-    private readonly _boardWidth: number;
-    private readonly _boardHeight: number;
+    private _boardWidth: number;
+    private _boardHeight: number;
     private readonly terrain: TerrainTypes[][];
 
     constructor(boardWidth: number, boardHeight: number) {
@@ -32,5 +34,53 @@ export default class BoardState {
 
     public getAllTerrain(): TerrainTypes[][] {
         return this.terrain;
+    }
+
+    public addRowTop(): void {
+        if (this._boardHeight + 1 > MAXBOARDSIZE) throw new Error("Failed to add row - board is already maximum height");
+        this.terrain.forEach((col) => col.unshift(TerrainTypes.Open));
+        this._boardHeight++;
+    }
+
+    public addRowBottom(): void {
+        if (this._boardHeight + 1 > MAXBOARDSIZE) throw new Error("Failed to add row - board is already maximum height");
+        this.terrain.forEach((col) => col.push(TerrainTypes.Open));
+        this._boardHeight++;
+    }
+
+    public addColLeft(): void {
+        if (this._boardWidth + 1 > MAXBOARDSIZE) throw new Error("Failed to add column - board is already maximum width");
+        this.terrain.unshift(Array(this._boardHeight).fill(TerrainTypes.Open));
+        this._boardWidth++;
+    }
+
+    public addColRight(): void {
+        if (this._boardWidth + 1 > MAXBOARDSIZE) throw new Error("Failed to add column - board is already maximum width");
+        this.terrain.push(Array(this._boardHeight).fill(TerrainTypes.Open));
+        this._boardWidth++;
+    }
+
+    public removeRowTop(): void {
+        if (this._boardHeight === 1) throw new Error("Failed to remove row - board is already minimum height");
+        this.terrain.forEach((col) => col.shift());
+        this._boardHeight--;
+    }
+
+    public removeRowBottom(): void {
+        if (this._boardHeight === 1) throw new Error("Failed to remove row - board is already minimum height");
+        this.terrain.forEach((col) => col.pop());
+        this._boardHeight--;
+    }
+
+    public removeColLeft(): void {
+        if (this.boardWidth === 1) throw new Error("Failed to remove column - board is already minimum width");
+        this.terrain.shift();
+        this._boardWidth--;
+    }
+
+    public removeColRight(): void {
+        if (this.boardWidth === 1) throw new Error("Failed to remove column - board is already minimum width");
+        this.terrain.pop();
+        this._boardWidth--;
     }
 }

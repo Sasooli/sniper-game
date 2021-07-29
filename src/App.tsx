@@ -14,6 +14,8 @@ export enum ClickModes {
   FLIP_PIECE
 }
 
+export const MAXBOARDSIZE = 10;
+
 function App() {
   //TODO: remove this hard-coded terrain setup
   let initialBoardState = new BoardState(4, 6);
@@ -68,7 +70,7 @@ function App() {
   }
   return (
     <div className='main-container'>
-      <Controls terrainMode={terrainMode} setTerrainMode={setTerrainMode} clickMode={clickMode} setClickMode={setClickMode} pieceMode={pieceMode} setPieceMode={setPieceMode} pieceFlippedMode={pieceFlippedMode} setPieceFlippedMode={setPieceFlippedMode}/>
+      <Controls boardState={boardState} setBoardState={setBoardState} terrainMode={terrainMode} setTerrainMode={setTerrainMode} clickMode={clickMode} setClickMode={setClickMode} pieceMode={pieceMode} setPieceMode={setPieceMode} pieceFlippedMode={pieceFlippedMode} setPieceFlippedMode={setPieceFlippedMode}/>
       <Board boardState={boardState} onSquareClick={squareClick} boardPieces={boardPieces} />
     </div>
   );
