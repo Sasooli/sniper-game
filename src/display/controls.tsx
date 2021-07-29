@@ -1,12 +1,15 @@
 import React from 'react';
-import {TerrainTypes} from '../game-state/BoardState';
+import BoardState, {TerrainTypes} from '../game-state/BoardState';
 import TerrainControls from './terrain-controls';
 import './controls.css';
 import {ClickModes} from "../App";
 import PieceControls from "./piece-controls";
 import {PieceType} from "../game-objects/GamePiece";
+import BoardSizeControls from "./board-size-controls";
 
 type ControlsProps = {
+    boardState: BoardState;
+    setBoardState: React.Dispatch<React.SetStateAction<BoardState>>;
     terrainMode : TerrainTypes | undefined;
     setTerrainMode : React.Dispatch<React.SetStateAction<TerrainTypes | undefined>>;
     pieceMode : PieceType | undefined;
@@ -17,7 +20,7 @@ type ControlsProps = {
     setPieceFlippedMode : React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-function Controls({setTerrainMode, terrainMode, clickMode, setClickMode, pieceMode, setPieceMode, pieceFlippedMode, setPieceFlippedMode} : ControlsProps) {
+function Controls({boardState, setBoardState, setTerrainMode, terrainMode, clickMode, setClickMode, pieceMode, setPieceMode, pieceFlippedMode, setPieceFlippedMode} : ControlsProps) {
     return (
         <div className={'controls-container'}>
             <div className={'controls-column'}>
@@ -25,6 +28,9 @@ function Controls({setTerrainMode, terrainMode, clickMode, setClickMode, pieceMo
             </div>
             <div className={'controls-column'}>
                 <PieceControls pieceMode={pieceMode} setPieceMode={setPieceMode} clickMode={clickMode} setClickMode={setClickMode} pieceFlippedMode={pieceFlippedMode} setPieceFlippedMode={setPieceFlippedMode} />
+            </div>
+            <div className={'controls-column'}>
+                <BoardSizeControls boardState={boardState} setBoardState={setBoardState} />
             </div>
         </div>
     )
