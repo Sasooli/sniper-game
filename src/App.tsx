@@ -37,18 +37,16 @@ function App() {
 
   const [ zoomLevel, setZoomLevel ] = useState<number>(1);
   const [ clickMode, setClickMode ] = useState<ClickModes>(ClickModes.NONE);
-  const [ terrainMode, setTerrainMode ] = useState<TerrainTypes | undefined>(undefined);
-  const [ pieceMode, setPieceMode ] = useState<PieceType | undefined>(undefined);
+  const [ terrainMode, setTerrainMode ] = useState<TerrainTypes>(TerrainTypes.Open);
+  const [ pieceMode, setPieceMode ] = useState<PieceType>(PieceType.None);
   const [ pieceFlippedMode, setPieceFlippedMode ] = useState<boolean>(false);
 
   const squareClick = (x: number, y: number) => {
     let newBoardState = cloneDeep(boardState);
     switch (clickMode) {
       case ClickModes.SET_PIECE:
-        if (pieceMode !== undefined) {
-          newBoardState.removePiece(x, y);
-          if (pieceMode !== PieceType.None) newBoardState.setPiece(x, y, new GamePiece(pieceMode, pieceFlippedMode));
-        }
+        newBoardState.removePiece(x, y);
+        if (pieceMode !== PieceType.None) newBoardState.setPiece(x, y, new GamePiece(pieceMode, pieceFlippedMode));
         setBoardState(newBoardState);
         break;
       case ClickModes.FLIP_PIECE:
@@ -57,7 +55,7 @@ function App() {
         setBoardState(newBoardState);
         break;
       case ClickModes.SET_TERRAIN:
-        if (terrainMode !== undefined) newBoardState.setTerrain(x, y, terrainMode);
+        newBoardState.setTerrain(x, y, terrainMode);
         setBoardState(newBoardState);
         break;
       case ClickModes.NONE:

@@ -7,8 +7,8 @@ import {faCrosshairs, faTimes, faWalking} from "@fortawesome/free-solid-svg-icon
 import './piece-controls.css';
 
 type PieceControlsProps = {
-    pieceMode : PieceType | undefined;
-    setPieceMode : React.Dispatch<React.SetStateAction<PieceType | undefined>>;
+    pieceMode : PieceType;
+    setPieceMode : React.Dispatch<React.SetStateAction<PieceType>>;
     clickMode : ClickModes;
     setClickMode : React.Dispatch<React.SetStateAction<ClickModes>>;
     pieceFlippedMode : boolean;
@@ -17,11 +17,11 @@ type PieceControlsProps = {
 
 function PieceControls({pieceMode, setPieceMode, clickMode, setClickMode, pieceFlippedMode, setPieceFlippedMode} : PieceControlsProps) {
 
-    const addPieceButton = (pieceType : PieceType | undefined, text: string, icon: IconDefinition | undefined, isFlipped: boolean) =>
+    const addPieceButton = (pieceType : PieceType, text: string, icon: IconDefinition | undefined, isFlipped: boolean) =>
         <button
             onClick={() => {
+                setClickMode(ClickModes.SET_PIECE);
                 setPieceMode(pieceType);
-                setClickMode(pieceType === undefined ? ClickModes.NONE : ClickModes.SET_PIECE);
                 setPieceFlippedMode(isFlipped);
             }}
             className={`piece-button ${clickMode === ClickModes.SET_PIECE && pieceMode === pieceType && pieceFlippedMode === isFlipped
@@ -49,6 +49,15 @@ function PieceControls({pieceMode, setPieceMode, clickMode, setClickMode, pieceF
             <div className='piece-button-text'>Flip Piece</div>
         </button>;
 
+    const cancelButton =
+        <button
+            onClick={() => {setClickMode(ClickModes.NONE );}}
+            className={'piece-button piece-button-inactive'}
+        >
+            <FontAwesomeIcon icon={faTimes} className='piece-button-icon' />
+            <div className='piece-button-text'>Cancel</div>
+        </button>;
+
     return (
         <div className={'terrain-controls-container'}>
             <p className={'controls-label'}>Place<br />Piece</p>
@@ -56,7 +65,7 @@ function PieceControls({pieceMode, setPieceMode, clickMode, setClickMode, pieceF
             {addPieceButton(PieceType.Soldier, 'Soldier', faWalking, false)}
             {addPieceButton(PieceType.Sniper, 'Sniper', faCrosshairs, false)}
             {addPieceButton(PieceType.Sniper, 'Sniper (flipped)', faCrosshairs, true)}
-            {addPieceButton(undefined, 'Cancel', faTimes, false)}
+            {cancelButton}
             {flipPieceButton}
             {/* TODO: get this icon, text from the piecetype*/}
         </div>

@@ -7,18 +7,18 @@ import {ClickModes} from "../App";
 import './terrain-controls.css';
 
 type TerrainControlsProps = {
-    terrainMode : TerrainTypes | undefined;
-    setTerrainMode : React.Dispatch<React.SetStateAction<TerrainTypes | undefined>>;
+    terrainMode : TerrainTypes;
+    setTerrainMode : React.Dispatch<React.SetStateAction<TerrainTypes>>;
     clickMode : ClickModes;
     setClickMode : React.Dispatch<React.SetStateAction<ClickModes>>;
 }
 
 function TerrainControls({setTerrainMode, terrainMode, clickMode, setClickMode} : TerrainControlsProps) {
-    const terrainButton = (terrainType : TerrainTypes | undefined, text: string, icon: IconDefinition | undefined) =>
+    const terrainButton = (terrainType : TerrainTypes, text: string, icon: IconDefinition | undefined) =>
         <button
             onClick={() => {
+                setClickMode(ClickModes.SET_TERRAIN);
                 setTerrainMode(terrainType);
-                setClickMode(terrainType === undefined ? ClickModes.NONE : ClickModes.SET_TERRAIN);
             }}
             className={`terrain-button ${(clickMode === ClickModes.SET_TERRAIN) && (terrainMode === terrainType)
                 ? 'terrain-button-active'
@@ -30,6 +30,16 @@ function TerrainControls({setTerrainMode, terrainMode, clickMode, setClickMode} 
             }
             <div className='terrain-button-text'>{text}</div>
         </button>;
+
+    const cancelButton =
+        <button
+            onClick={() => {setClickMode(ClickModes.NONE );}}
+            className={'terrain-button terrain-button-inactive'}
+        >
+            <FontAwesomeIcon icon={faTimes} className='terrain-button-icon' />
+            <div className='terrain-button-text'>Cancel</div>
+        </button>;
+
     return (
         <div className={'terrain-controls-container'}>
             <p className={'controls-label'}>Set<br />Terrain</p>
@@ -37,7 +47,7 @@ function TerrainControls({setTerrainMode, terrainMode, clickMode, setClickMode} 
             {terrainButton(TerrainTypes.Rubble, 'Rubble', faStream)}
             {terrainButton(TerrainTypes.Building, 'Building', faHome)}
             {terrainButton(TerrainTypes.Tower, 'Tower', faBuilding)}
-            {terrainButton(undefined, 'Cancel', faTimes)}
+            {cancelButton}
         </div>
     )
 }
