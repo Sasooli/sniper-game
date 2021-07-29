@@ -10,7 +10,8 @@ import Controls from './display/controls';
 export enum ClickModes {
   NONE,
   SET_TERRAIN,
-  SET_PIECE
+  SET_PIECE,
+  FLIP_PIECE
 }
 
 function App() {
@@ -41,13 +42,19 @@ function App() {
   const [ pieceMode, setPieceMode ] = useState<PieceType | undefined>(undefined);
 
   const squareClick = (x: number, y: number) => {
+    let newBoardPieces
     switch (clickMode) {
       case ClickModes.SET_PIECE:
-        let newBoardPieces = cloneDeep(boardPieces);
+        newBoardPieces = cloneDeep(boardPieces);
         if (pieceMode !== undefined) {
           newBoardPieces.removePiece(x, y);
           if (pieceMode !== PieceType.None) newBoardPieces.placeNewPiece(x, y, pieceMode);
         }
+        setBoardPieces(newBoardPieces);
+        break;
+      case ClickModes.FLIP_PIECE:
+        newBoardPieces = cloneDeep(boardPieces);
+        newBoardPieces.flipPiece(x, y);
         setBoardPieces(newBoardPieces);
         break;
       case ClickModes.SET_TERRAIN:
