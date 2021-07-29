@@ -9,26 +9,50 @@ export type SquareProps = {
     terrainType: TerrainTypes;
     piece?: GamePiece;
     onClick: Function;
+    zoomLevel: number;
 }
 
-function Square({terrainType, piece, onClick}: SquareProps) {
+function Square({terrainType, piece, onClick, zoomLevel}: SquareProps) {
+
+    const scaledSizeString = (baseSize: number) => `${baseSize * zoomLevel}px`;
+
     const terrainIcon =
         terrainType === TerrainTypes.Building ? faHome
             : terrainType === TerrainTypes.Tower ? faBuilding
             : terrainType === TerrainTypes.Rubble ? faStream
             : null;
+
+    // TODO: move this out and use it to get icon elsewhere
     const pieceProperties =
         piece?.getPieceType() === PieceType.Soldier ? { icon: faWalking, class: 'soldier-icon' }
             : piece?.getPieceType() === PieceType.Sniper ? { icon: faCrosshairs, class: 'sniper-icon' }
             : null;
+
     return (
-        <div className='grid-item' onClick={() => onClick()}>
-            {terrainIcon && <FontAwesomeIcon icon={terrainIcon} className='terrain-icon' />}
+        <div className='grid-item'
+             onClick={() => onClick()}
+             style={{
+                 borderRadius: scaledSizeString(3),
+                 width: scaledSizeString(60),
+                 height: scaledSizeString(60),
+                 margin: scaledSizeString(2)
+             }}
+        >
+            {terrainIcon && <FontAwesomeIcon icon={terrainIcon} className='terrain-icon' style={{fontSize: scaledSizeString(45)}} />}
             {pieceProperties &&
-            <div className='piece-container'>
+            <div
+                className='piece-container'
+                style={{
+                    boxShadow: `${scaledSizeString(2)} ${scaledSizeString(5)} rgb(150, 150, 150)`,
+                    width: scaledSizeString(25),
+                    height: scaledSizeString(25),
+                    borderRadius: scaledSizeString(10),
+                }}
+            >
                 <FontAwesomeIcon
                     icon={pieceProperties.icon}
-                    className={`${pieceProperties.class} ${piece?.getIsFlipped() ? 'flipped-piece-icon' : ''}`}
+                    className={pieceProperties.class}
+                    style={{fontSize: scaledSizeString(20), opacity: piece?.getIsFlipped() ? 0.2 : 1 }}
                 />
             </div>
             }

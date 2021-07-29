@@ -6,6 +6,7 @@ import {ClickModes} from "../App";
 import PieceControls from "./piece-controls";
 import {PieceType} from "../game-objects/GamePiece";
 import BoardSizeControls from "./board-size-controls";
+import ZoomControls from "./zoom-controls";
 
 type ControlsProps = {
     boardState: BoardState;
@@ -18,19 +19,22 @@ type ControlsProps = {
     setClickMode : React.Dispatch<React.SetStateAction<ClickModes>>;
     pieceFlippedMode : boolean;
     setPieceFlippedMode : React.Dispatch<React.SetStateAction<boolean>>;
+    zoomLevel : number;
+    setZoomLevel : React.Dispatch<React.SetStateAction<number>>;
 }
 
-function Controls({boardState, setBoardState, setTerrainMode, terrainMode, clickMode, setClickMode, pieceMode, setPieceMode, pieceFlippedMode, setPieceFlippedMode} : ControlsProps) {
+function Controls({boardState, setBoardState, setTerrainMode, terrainMode, clickMode, setClickMode, pieceMode, setPieceMode, pieceFlippedMode, setPieceFlippedMode, zoomLevel, setZoomLevel} : ControlsProps) {
     return (
-        <div className={'controls-container'}>
-            <div className={'controls-column'}>
-                <TerrainControls terrainMode={terrainMode} setTerrainMode={setTerrainMode} clickMode={clickMode} setClickMode={setClickMode} />
-            </div>
-            <div className={'controls-column'}>
-                <PieceControls pieceMode={pieceMode} setPieceMode={setPieceMode} clickMode={clickMode} setClickMode={setClickMode} pieceFlippedMode={pieceFlippedMode} setPieceFlippedMode={setPieceFlippedMode} />
-            </div>
-            <div className={'controls-column'}>
-                <BoardSizeControls boardState={boardState} setBoardState={setBoardState} />
+        <div>
+            <ZoomControls zoomLevel={zoomLevel} setZoomLevel={setZoomLevel} />
+            <BoardSizeControls boardState={boardState} setBoardState={setBoardState} />
+            <div className={'controls-container'}>
+                <div className={'controls-column'}>
+                    <TerrainControls terrainMode={terrainMode} setTerrainMode={setTerrainMode} clickMode={clickMode} setClickMode={setClickMode} />
+                </div>
+                <div className={'controls-column'}>
+                    <PieceControls pieceMode={pieceMode} setPieceMode={setPieceMode} clickMode={clickMode} setClickMode={setClickMode} pieceFlippedMode={pieceFlippedMode} setPieceFlippedMode={setPieceFlippedMode} />
+                </div>
             </div>
         </div>
     )

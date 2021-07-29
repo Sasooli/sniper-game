@@ -8,9 +8,10 @@ export type BoardProps = {
     boardState: BoardState;
     boardPieces: BoardPieces;
     onSquareClick: Function;
+    zoomLevel: number;
 }
 
-function Board({boardState, boardPieces, onSquareClick}: BoardProps) {
+function Board({boardState, boardPieces, onSquareClick, zoomLevel}: BoardProps) {
     const terrain = boardState.getAllTerrain();
     return (
         <div className={'grid-container'}>
@@ -22,6 +23,7 @@ function Board({boardState, boardPieces, onSquareClick}: BoardProps) {
                         piece={boardPieces.findPieceAt(colIndex, rowIndex)}
                         key={`square-${colIndex}-${rowIndex}`}
                         onClick={() => onSquareClick(colIndex, rowIndex)}
+                        zoomLevel={zoomLevel}
                     />
                     )}
                 </div>
