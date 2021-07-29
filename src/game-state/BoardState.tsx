@@ -1,5 +1,5 @@
 import {MAXBOARDSIZE} from "../App";
-import GamePiece, {PieceType} from "../game-objects/GamePiece";
+import GamePiece from "../game-objects/GamePiece";
 
 export enum TerrainTypes {
     Open,
@@ -18,16 +18,16 @@ export default class BoardState {
     private _boardWidth: number;
     private _boardHeight: number;
     private readonly terrain: TerrainTypes[][];
-    private readonly pieces: GamePiece[][];
+    private readonly pieces: (GamePiece | undefined)[][];
 
     constructor(boardWidth: number, boardHeight: number) {
         this._boardWidth = boardWidth;
         this._boardHeight = boardHeight;
         this.terrain = Array(boardWidth).fill(0).map(() => Array(boardHeight).fill(TerrainTypes.Open));
-        this.pieces = Array(boardWidth).fill(0).map(() => Array(boardHeight).fill(new GamePiece(PieceType.None)));
+        this.pieces = Array(boardWidth).fill(0).map(() => Array(boardHeight).fill(undefined));
     }
 
-    public getPiece(x: number, y: number): GamePiece {
+    public getPiece(x: number, y: number): GamePiece | undefined {
         return this.pieces[x][y];
     }
 
@@ -36,19 +36,19 @@ export default class BoardState {
     }
 
     public flipPiece(x: number, y: number) {
-        this.pieces[x][y].flip();
+        this.pieces[x][y]?.flip();
     }
 
     public removePiece(x: number, y: number) {
-        this.pieces[x][y] = new GamePiece(PieceType.None);
+        this.pieces[x][y] = undefined;
     }
 
-    public getAllPieces(): GamePiece[][] {
+    public getAllPieces(): (GamePiece | undefined)[][] {
         return this.pieces;
     }
 
     public hasPiece(x: number, y: number): boolean {
-        return this.pieces[x][y].getPieceType() !== PieceType.None;
+        return !!this.pieces[x][y];
     }
 
     public getTerrain(x: number, y: number): TerrainTypes {
@@ -66,28 +66,28 @@ export default class BoardState {
     public addRowTop(): void {
         if (this._boardHeight + 1 > MAXBOARDSIZE) throw new Error("Failed to add row - board is already maximum height");
         this.terrain.forEach((col) => col.unshift(TerrainTypes.Open));
-        this.pieces.forEach((col) => col.unshift(new GamePiece(PieceType.None)));
+        this.pieces.forEach((col) => col.unshift(undefined));
         this._boardHeight++;
     }
 
     public addRowBottom(): void {
         if (this._boardHeight + 1 > MAXBOARDSIZE) throw new Error("Failed to add row - board is already maximum height");
         this.terrain.forEach((col) => col.push(TerrainTypes.Open));
-        this.pieces.forEach((col) => col.push(new GamePiece(PieceType.None)));
+        this.pieces.forEach((col) => col.push(undefined));
         this._boardHeight++;
     }
 
     public addColLeft(): void {
         if (this._boardWidth + 1 > MAXBOARDSIZE) throw new Error("Failed to add column - board is already maximum width");
         this.terrain.unshift(Array(this._boardHeight).fill(TerrainTypes.Open));
-        this.pieces.unshift(Array(this._boardHeight).fill(new GamePiece(PieceType.None)));
+        this.pieces.unshift(Array(this._boardHeight).fill(undefined));
         this._boardWidth++;
     }
 
     public addColRight(): void {
         if (this._boardWidth + 1 > MAXBOARDSIZE) throw new Error("Failed to add column - board is already maximum width");
         this.terrain.push(Array(this._boardHeight).fill(TerrainTypes.Open));
-        this.pieces.push(Array(this._boardHeight).fill(new GamePiece(PieceType.None)));
+        this.pieces.push(Array(this._boardHeight).fill(undefined));
         this._boardWidth++;
     }
 
