@@ -46,6 +46,7 @@ export default class GamePiece {
 }
 
 export enum PieceType {
+    None,
     Sniper,
     Soldier,
 }

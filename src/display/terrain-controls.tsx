@@ -4,6 +4,7 @@ import {faBuilding, faHome, faStream, faTimes} from '@fortawesome/free-solid-svg
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {IconDefinition} from '@fortawesome/fontawesome-svg-core';
 import {ClickModes} from "../App";
+import './terrain-controls.css';
 
 type TerrainControlsProps = {
     terrainMode : TerrainTypes | undefined;
@@ -26,7 +27,7 @@ function TerrainControls({setTerrainMode, terrainMode, setClickMode} : TerrainCo
                 ? <FontAwesomeIcon icon={icon} className='terrain-button-icon' />
                 : <div className='terrain-button-icon' />
             }
-            <text className='terrain-button-text'>{text}</text>
+            <div className='terrain-button-text'>{text}</div>
         </button>;
     return (
         <div className={'terrain-controls-container'}>

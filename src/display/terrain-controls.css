@@ -1,0 +1,35 @@
+/*TODO: combine this and piece-controls.css, possibly controls.css*/
+
+.terrain-button {
+    width: 60px;
+    height: 60px;
+    margin: 5px;
+    border-width: 2px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.terrain-button-active {
+    border-color: teal;
+    background-color: teal;
+    color: lightgrey;
+}
+
+.terrain-button-inactive {
+    border-color: teal;
+    background-color: white;
+}
+
+.terrain-button-icon {
+    width: 30px;
+    height: 30px;
+    border-width: 2px;
+    border-color: black;
+}
+
+.terrain-button-text {
+
+}

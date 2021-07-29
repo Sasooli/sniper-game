@@ -24,34 +24,43 @@ function App() {
   initialBoardState.setTerrain(1,5, TerrainTypes.Building);
   initialBoardState.setTerrain(2,1, TerrainTypes.Building);
   //TODO: remove this hard-coded piece setup
-  let boardPieces = new BoardPieces();
-  boardPieces.placeNewPiece(0,0, PieceType.Soldier);
-  boardPieces.placeNewPiece(0,1, PieceType.Soldier);
-  boardPieces.placeNewPiece(3,5, PieceType.Sniper);
-  boardPieces.placeNewPiece(0,4, PieceType.Sniper);
-  boardPieces.placeNewPiece(3,1, PieceType.Soldier);
-  boardPieces.placeNewPiece(2,0, PieceType.Sniper, true);
-  boardPieces.placeNewPiece(3,0, PieceType.Soldier, true);
-  
+  let initialBoardPieces = new BoardPieces();
+  initialBoardPieces.placeNewPiece(0,0, PieceType.Soldier);
+  initialBoardPieces.placeNewPiece(0,1, PieceType.Soldier);
+  initialBoardPieces.placeNewPiece(3,5, PieceType.Sniper);
+  initialBoardPieces.placeNewPiece(0,4, PieceType.Sniper);
+  initialBoardPieces.placeNewPiece(3,1, PieceType.Soldier);
+  initialBoardPieces.placeNewPiece(2,0, PieceType.Sniper, true);
+  initialBoardPieces.placeNewPiece(3,0, PieceType.Soldier, true);
+
   const [ boardState, setBoardState ] = useState<BoardState>(initialBoardState);
+  const [ boardPieces, setBoardPieces ] = useState<BoardPieces>(initialBoardPieces);
 
   const [ clickMode, setClickMode ] = useState<ClickModes>(ClickModes.NONE);
   const [ terrainMode, setTerrainMode ] = useState<TerrainTypes | undefined>(undefined);
+  const [ pieceMode, setPieceMode ] = useState<PieceType | undefined>(undefined);
 
   const squareClick = (x: number, y: number) => {
-    let newBoardState = cloneDeep(boardState);
     switch (clickMode) {
       case ClickModes.SET_PIECE:
+        let newBoardPieces = cloneDeep(boardPieces);
+        if (pieceMode !== undefined) {
+          newBoardPieces.removePiece(x, y);
+          if (pieceMode !== PieceType.None) newBoardPieces.placeNewPiece(x, y, pieceMode);
+        }
+        setBoardPieces(newBoardPieces);
+        break;
       case ClickModes.SET_TERRAIN:
+        let newBoardState = cloneDeep(boardState);
         if (terrainMode !== undefined) newBoardState.setTerrain(x, y, terrainMode);
+        setBoardState(newBoardState);
         break;
       case ClickModes.NONE:
     }
-    setBoardState(newBoardState);
   }
   return (
     <div className='main-container'>
-      <Controls terrainMode={terrainMode} setTerrainMode={setTerrainMode} setClickMode={setClickMode}/>
+      <Controls terrainMode={terrainMode} setTerrainMode={setTerrainMode} setClickMode={setClickMode} pieceMode={pieceMode} setPieceMode={setPieceMode}/>
       <Board boardState={boardState} onSquareClick={squareClick} boardPieces={boardPieces} />
     </div>
   );
