@@ -40,6 +40,7 @@ function App() {
   const [ clickMode, setClickMode ] = useState<ClickModes>(ClickModes.NONE);
   const [ terrainMode, setTerrainMode ] = useState<TerrainTypes | undefined>(undefined);
   const [ pieceMode, setPieceMode ] = useState<PieceType | undefined>(undefined);
+  const [ pieceFlippedMode, setPieceFlippedMode ] = useState<boolean>(false);
 
   const squareClick = (x: number, y: number) => {
     let newBoardPieces
@@ -48,7 +49,7 @@ function App() {
         newBoardPieces = cloneDeep(boardPieces);
         if (pieceMode !== undefined) {
           newBoardPieces.removePiece(x, y);
-          if (pieceMode !== PieceType.None) newBoardPieces.placeNewPiece(x, y, pieceMode);
+          if (pieceMode !== PieceType.None) newBoardPieces.placeNewPiece(x, y, pieceMode, pieceFlippedMode);
         }
         setBoardPieces(newBoardPieces);
         break;
@@ -67,7 +68,7 @@ function App() {
   }
   return (
     <div className='main-container'>
-      <Controls terrainMode={terrainMode} setTerrainMode={setTerrainMode} clickMode={clickMode} setClickMode={setClickMode} pieceMode={pieceMode} setPieceMode={setPieceMode}/>
+      <Controls terrainMode={terrainMode} setTerrainMode={setTerrainMode} clickMode={clickMode} setClickMode={setClickMode} pieceMode={pieceMode} setPieceMode={setPieceMode} pieceFlippedMode={pieceFlippedMode} setPieceFlippedMode={setPieceFlippedMode}/>
       <Board boardState={boardState} onSquareClick={squareClick} boardPieces={boardPieces} />
     </div>
   );

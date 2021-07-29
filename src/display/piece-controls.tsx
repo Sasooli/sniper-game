@@ -11,17 +11,20 @@ type PieceControlsProps = {
     setPieceMode : React.Dispatch<React.SetStateAction<PieceType | undefined>>;
     clickMode : ClickModes;
     setClickMode : React.Dispatch<React.SetStateAction<ClickModes>>;
+    pieceFlippedMode : boolean;
+    setPieceFlippedMode : React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-function PieceControls({pieceMode, setPieceMode, clickMode, setClickMode} : PieceControlsProps) {
+function PieceControls({pieceMode, setPieceMode, clickMode, setClickMode, pieceFlippedMode, setPieceFlippedMode} : PieceControlsProps) {
 
-    const addPieceButton = (pieceType : PieceType | undefined, text: string, icon: IconDefinition | undefined) =>
+    const addPieceButton = (pieceType : PieceType | undefined, text: string, icon: IconDefinition | undefined, isFlipped: boolean) =>
         <button
             onClick={() => {
                 setPieceMode(pieceType);
                 setClickMode(pieceType === undefined ? ClickModes.NONE : ClickModes.SET_PIECE);
+                setPieceFlippedMode(isFlipped);
             }}
-            className={`piece-button ${clickMode === ClickModes.SET_PIECE && pieceMode === pieceType
+            className={`piece-button ${clickMode === ClickModes.SET_PIECE && pieceMode === pieceType && pieceFlippedMode === isFlipped
                 ? 'piece-button-active'
                 : 'piece-button-inactive'}`}
         >
@@ -49,10 +52,11 @@ function PieceControls({pieceMode, setPieceMode, clickMode, setClickMode} : Piec
     return (
         <div className={'terrain-controls-container'}>
             <p className={'controls-label'}>Place<br />Piece</p>
-            {addPieceButton(PieceType.None, 'Clear', undefined)}
-            {addPieceButton(PieceType.Soldier, 'Soldier', faWalking)}
-            {addPieceButton(PieceType.Sniper, 'Sniper', faCrosshairs)}
-            {addPieceButton(undefined, 'Cancel', faTimes)}
+            {addPieceButton(PieceType.None, 'Clear', undefined, false)}
+            {addPieceButton(PieceType.Soldier, 'Soldier', faWalking, false)}
+            {addPieceButton(PieceType.Sniper, 'Sniper', faCrosshairs, false)}
+            {addPieceButton(PieceType.Sniper, 'Sniper (flipped)', faCrosshairs, true)}
+            {addPieceButton(undefined, 'Cancel', faTimes, false)}
             {flipPieceButton}
             {/* TODO: get this icon, text from the piecetype*/}
         </div>

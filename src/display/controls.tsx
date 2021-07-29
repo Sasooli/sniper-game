@@ -13,16 +13,18 @@ type ControlsProps = {
     setPieceMode : React.Dispatch<React.SetStateAction<PieceType | undefined>>;
     clickMode : ClickModes;
     setClickMode : React.Dispatch<React.SetStateAction<ClickModes>>;
+    pieceFlippedMode : boolean;
+    setPieceFlippedMode : React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-function Controls({setTerrainMode, terrainMode, clickMode, setClickMode, pieceMode, setPieceMode} : ControlsProps) {
+function Controls({setTerrainMode, terrainMode, clickMode, setClickMode, pieceMode, setPieceMode, pieceFlippedMode, setPieceFlippedMode} : ControlsProps) {
     return (
         <div className={'controls-container'}>
             <div className={'controls-column'}>
                 <TerrainControls terrainMode={terrainMode} setTerrainMode={setTerrainMode} clickMode={clickMode} setClickMode={setClickMode} />
             </div>
             <div className={'controls-column'}>
-                <PieceControls pieceMode={pieceMode} setPieceMode={setPieceMode} clickMode={clickMode} setClickMode={setClickMode} />
+                <PieceControls pieceMode={pieceMode} setPieceMode={setPieceMode} clickMode={clickMode} setClickMode={setClickMode} pieceFlippedMode={pieceFlippedMode} setPieceFlippedMode={setPieceFlippedMode} />
             </div>
         </div>
     )
