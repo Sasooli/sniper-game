@@ -45,10 +45,8 @@ export default class BoardPieces {
 
     public removePiece(xPosition: number, yPosition: number): void {
         // TODO: Error handling
-        this.pieceList.splice(
-            this.pieceList
-                .findIndex(piece => piece.getXPosition() === xPosition && piece.getYPosition() === yPosition),
-            1
-        );
+        const indexToRemove = this.pieceList
+            .findIndex(piece => piece.getXPosition() === xPosition && piece.getYPosition() === yPosition)
+        if (indexToRemove !== -1) this.pieceList.splice(indexToRemove, 1);
     }
 }

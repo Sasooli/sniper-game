@@ -1,41 +1,30 @@
 import React from 'react';
 import {TerrainTypes} from '../game-state/BoardState';
+import TerrainControls from './terrain-controls';
 import './controls.css';
-import {faHome} from '@fortawesome/free-solid-svg-icons';
-import {faBuilding} from '@fortawesome/free-solid-svg-icons';
-import {faStream} from '@fortawesome/free-solid-svg-icons';
-import {faTimes} from '@fortawesome/free-solid-svg-icons';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {IconDefinition} from '@fortawesome/fontawesome-svg-core';
+import {ClickModes} from "../App";
+import PieceControls from "./piece-controls";
+import {PieceType} from "../game-objects/GamePiece";
 
 type ControlsProps = {
     terrainMode : TerrainTypes | undefined;
     setTerrainMode : React.Dispatch<React.SetStateAction<TerrainTypes | undefined>>;
+    pieceMode : PieceType | undefined;
+    setPieceMode : React.Dispatch<React.SetStateAction<PieceType | undefined>>;
+    clickMode : ClickModes;
+    setClickMode : React.Dispatch<React.SetStateAction<ClickModes>>;
+    pieceFlippedMode : boolean;
+    setPieceFlippedMode : React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-function Controls({setTerrainMode, terrainMode} : ControlsProps) {
-    const terrainButton = (terrainType : TerrainTypes | undefined, text: string, icon: IconDefinition | undefined) =>
-        <button
-            onClick={() => setTerrainMode(terrainType)}
-            className={`terrain-button ${(terrainMode === terrainType) && (terrainType !== undefined)
-                ? 'terrain-button-active'
-                : 'terrain-button-inactive'}`}
-        >
-            {icon !== undefined
-                ? <FontAwesomeIcon icon={icon} className='terrain-button-icon' />
-                : <div className='terrain-button-icon' />
-            }
-            <text className='terrain-button-text'>{text}</text>
-        </button>;
+function Controls({setTerrainMode, terrainMode, clickMode, setClickMode, pieceMode, setPieceMode, pieceFlippedMode, setPieceFlippedMode} : ControlsProps) {
     return (
         <div className={'controls-container'}>
-            <div className={'terrain-controls-container'}>
-                <p className={'controls-label'}>Set<br />Terrain</p>
-                {terrainButton(TerrainTypes.Open, 'Open', undefined)}
-                {terrainButton(TerrainTypes.Rubble, 'Rubble', faStream)}
-                {terrainButton(TerrainTypes.Building, 'Building', faHome)}
-                {terrainButton(TerrainTypes.Tower, 'Tower', faBuilding)}
-                {terrainButton(undefined, 'Cancel', faTimes)}
+            <div className={'controls-column'}>
+                <TerrainControls terrainMode={terrainMode} setTerrainMode={setTerrainMode} clickMode={clickMode} setClickMode={setClickMode} />
+            </div>
+            <div className={'controls-column'}>
+                <PieceControls pieceMode={pieceMode} setPieceMode={setPieceMode} clickMode={clickMode} setClickMode={setClickMode} pieceFlippedMode={pieceFlippedMode} setPieceFlippedMode={setPieceFlippedMode} />
             </div>
         </div>
     )

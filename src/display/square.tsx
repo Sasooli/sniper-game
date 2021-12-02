@@ -8,10 +8,10 @@ import GamePiece, {PieceType} from "../game-objects/GamePiece";
 export type SquareProps = {
     terrainType: TerrainTypes;
     piece?: GamePiece;
-    placeTerrainHere: Function;
+    onClick: Function;
 }
 
-function Square({terrainType, piece, placeTerrainHere}: SquareProps) {
+function Square({terrainType, piece, onClick}: SquareProps) {
     const terrainIcon =
         terrainType === TerrainTypes.Building ? faHome
             : terrainType === TerrainTypes.Tower ? faBuilding
@@ -22,7 +22,7 @@ function Square({terrainType, piece, placeTerrainHere}: SquareProps) {
             : piece?.getPieceType() === PieceType.Sniper ? { icon: faCrosshairs, class: 'sniper-icon' }
             : null;
     return (
-        <div className='grid-item' onClick={() => placeTerrainHere()}>
+        <div className='grid-item' onClick={() => onClick()}>
             {terrainIcon && <FontAwesomeIcon icon={terrainIcon} className='terrain-icon' />}
             {pieceProperties &&
             <div className='piece-container'>
