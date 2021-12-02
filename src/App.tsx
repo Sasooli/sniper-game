@@ -39,6 +39,7 @@ function App() {
   const [ boardState, setBoardState ] = useState<BoardState>(initialBoardState);
   const [ boardPieces, setBoardPieces ] = useState<BoardPieces>(initialBoardPieces);
 
+  const [ zoomLevel, setZoomLevel ] = useState<number>(1);
   const [ clickMode, setClickMode ] = useState<ClickModes>(ClickModes.NONE);
   const [ terrainMode, setTerrainMode ] = useState<TerrainTypes | undefined>(undefined);
   const [ pieceMode, setPieceMode ] = useState<PieceType | undefined>(undefined);
@@ -70,8 +71,16 @@ function App() {
   }
   return (
     <div className='main-container'>
-      <Controls boardState={boardState} setBoardState={setBoardState} terrainMode={terrainMode} setTerrainMode={setTerrainMode} clickMode={clickMode} setClickMode={setClickMode} pieceMode={pieceMode} setPieceMode={setPieceMode} pieceFlippedMode={pieceFlippedMode} setPieceFlippedMode={setPieceFlippedMode}/>
-      <Board boardState={boardState} onSquareClick={squareClick} boardPieces={boardPieces} />
+      <Controls
+          boardState={boardState}
+          setBoardState={setBoardState}
+          terrainMode={terrainMode} setTerrainMode={setTerrainMode}
+          clickMode={clickMode} setClickMode={setClickMode}
+          pieceMode={pieceMode} setPieceMode={setPieceMode}
+          pieceFlippedMode={pieceFlippedMode} setPieceFlippedMode={setPieceFlippedMode}
+          zoomLevel={zoomLevel} setZoomLevel={setZoomLevel}
+      />
+      <Board boardState={boardState} onSquareClick={squareClick} boardPieces={boardPieces} zoomLevel={zoomLevel} />
     </div>
   );
 }
