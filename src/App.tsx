@@ -3,8 +3,7 @@ import './App.css';
 import {cloneDeep} from 'lodash';
 import Board from './display/board';
 import BoardState, {TerrainTypes} from './game-state/BoardState';
-import BoardPieces from './game-state/BoardPieces';
-import {PieceType} from './game-objects/GamePiece';
+import GamePiece, {PieceType} from './game-objects/GamePiece';
 import Controls from './display/controls';
 
 export enum ClickModes {
@@ -17,7 +16,7 @@ export enum ClickModes {
 export const MAXBOARDSIZE = 10;
 
 function App() {
-  //TODO: remove this hard-coded terrain setup
+  //TODO: remove this hard-coded terrain & piece setup
   let initialBoardState = new BoardState(4, 6);
   initialBoardState.setTerrain(1,1, TerrainTypes.Rubble);
   initialBoardState.setTerrain(3,1, TerrainTypes.Rubble);
@@ -26,44 +25,37 @@ function App() {
   initialBoardState.setTerrain(0,5, TerrainTypes.Tower);
   initialBoardState.setTerrain(1,5, TerrainTypes.Building);
   initialBoardState.setTerrain(2,1, TerrainTypes.Building);
-  //TODO: remove this hard-coded piece setup
-  let initialBoardPieces = new BoardPieces();
-  initialBoardPieces.placeNewPiece(0,0, PieceType.Soldier);
-  initialBoardPieces.placeNewPiece(0,1, PieceType.Soldier);
-  initialBoardPieces.placeNewPiece(3,5, PieceType.Sniper);
-  initialBoardPieces.placeNewPiece(0,4, PieceType.Sniper);
-  initialBoardPieces.placeNewPiece(3,1, PieceType.Soldier);
-  initialBoardPieces.placeNewPiece(2,0, PieceType.Sniper, true);
-  initialBoardPieces.placeNewPiece(3,0, PieceType.Soldier, true);
+  initialBoardState.setPiece(0,0, new GamePiece(PieceType.Soldier));
+  initialBoardState.setPiece(0,1, new GamePiece(PieceType.Soldier));
+  initialBoardState.setPiece(3,5, new GamePiece(PieceType.Sniper));
+  initialBoardState.setPiece(0,4, new GamePiece(PieceType.Sniper));
+  initialBoardState.setPiece(3,1, new GamePiece(PieceType.Soldier));
+  initialBoardState.setPiece(2,0, new GamePiece(PieceType.Sniper, true));
+  initialBoardState.setPiece(3,0, new GamePiece(PieceType.Soldier, true));
 
   const [ boardState, setBoardState ] = useState<BoardState>(initialBoardState);
-  const [ boardPieces, setBoardPieces ] = useState<BoardPieces>(initialBoardPieces);
 
   const [ zoomLevel, setZoomLevel ] = useState<number>(1);
   const [ clickMode, setClickMode ] = useState<ClickModes>(ClickModes.NONE);
-  const [ terrainMode, setTerrainMode ] = useState<TerrainTypes | undefined>(undefined);
-  const [ pieceMode, setPieceMode ] = useState<PieceType | undefined>(undefined);
+  const [ terrainMode, setTerrainMode ] = useState<TerrainTypes>(TerrainTypes.Open);
+  const [ pieceMode, setPieceMode ] = useState<PieceType>(PieceType.None);
   const [ pieceFlippedMode, setPieceFlippedMode ] = useState<boolean>(false);
 
   const squareClick = (x: number, y: number) => {
-    let newBoardPieces
+    let newBoardState = cloneDeep(boardState);
     switch (clickMode) {
       case ClickModes.SET_PIECE:
-        newBoardPieces = cloneDeep(boardPieces);
-        if (pieceMode !== undefined) {
-          newBoardPieces.removePiece(x, y);
-          if (pieceMode !== PieceType.None) newBoardPieces.placeNewPiece(x, y, pieceMode, pieceFlippedMode);
-        }
-        setBoardPieces(newBoardPieces);
+        newBoardState.removePiece(x, y);
+        if (pieceMode !== PieceType.None) newBoardState.setPiece(x, y, new GamePiece(pieceMode, pieceFlippedMode));
+        setBoardState(newBoardState);
         break;
       case ClickModes.FLIP_PIECE:
-        newBoardPieces = cloneDeep(boardPieces);
-        newBoardPieces.flipPiece(x, y);
-        setBoardPieces(newBoardPieces);
+        newBoardState = cloneDeep(boardState);
+        newBoardState.flipPiece(x, y);
+        setBoardState(newBoardState);
         break;
       case ClickModes.SET_TERRAIN:
-        let newBoardState = cloneDeep(boardState);
-        if (terrainMode !== undefined) newBoardState.setTerrain(x, y, terrainMode);
+        newBoardState.setTerrain(x, y, terrainMode);
         setBoardState(newBoardState);
         break;
       case ClickModes.NONE:
@@ -80,7 +72,7 @@ function App() {
           pieceFlippedMode={pieceFlippedMode} setPieceFlippedMode={setPieceFlippedMode}
           zoomLevel={zoomLevel} setZoomLevel={setZoomLevel}
       />
-      <Board boardState={boardState} onSquareClick={squareClick} boardPieces={boardPieces} zoomLevel={zoomLevel} />
+      <Board boardState={boardState} onSquareClick={squareClick} zoomLevel={zoomLevel} />
     </div>
   );
 }

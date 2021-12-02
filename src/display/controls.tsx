@@ -11,10 +11,10 @@ import ZoomControls from "./zoom-controls";
 type ControlsProps = {
     boardState: BoardState;
     setBoardState: React.Dispatch<React.SetStateAction<BoardState>>;
-    terrainMode : TerrainTypes | undefined;
-    setTerrainMode : React.Dispatch<React.SetStateAction<TerrainTypes | undefined>>;
-    pieceMode : PieceType | undefined;
-    setPieceMode : React.Dispatch<React.SetStateAction<PieceType | undefined>>;
+    terrainMode : TerrainTypes;
+    setTerrainMode : React.Dispatch<React.SetStateAction<TerrainTypes>>;
+    pieceMode : PieceType;
+    setPieceMode : React.Dispatch<React.SetStateAction<PieceType>>;
     clickMode : ClickModes;
     setClickMode : React.Dispatch<React.SetStateAction<ClickModes>>;
     pieceFlippedMode : boolean;

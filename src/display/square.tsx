@@ -40,21 +40,21 @@ function Square({terrainType, piece, onClick, zoomLevel}: SquareProps) {
         >
             {terrainIcon && <FontAwesomeIcon icon={terrainIcon} className='terrain-icon' style={{fontSize: scaledSizeString(45)}} />}
             {pieceProperties &&
-            <div
-                className='piece-container'
-                style={{
-                    boxShadow: `${scaledSizeString(2)} ${scaledSizeString(5)} rgb(150, 150, 150)`,
-                    width: scaledSizeString(25),
-                    height: scaledSizeString(25),
-                    borderRadius: scaledSizeString(10),
-                }}
-            >
-                <FontAwesomeIcon
-                    icon={pieceProperties.icon}
-                    className={pieceProperties.class}
-                    style={{fontSize: scaledSizeString(20), opacity: piece?.getIsFlipped() ? 0.2 : 1 }}
-                />
-            </div>
+                <div
+                    className='piece-container'
+                    style={{
+                        boxShadow: `${scaledSizeString(2)} ${scaledSizeString(5)} rgb(150, 150, 150)`,
+                        width: scaledSizeString(25),
+                        height: scaledSizeString(25),
+                        borderRadius: scaledSizeString(10),
+                    }}
+                >
+                    <FontAwesomeIcon
+                        icon={pieceProperties.icon}
+                        className={pieceProperties.class}
+                        style={{fontSize: scaledSizeString(20), opacity: piece?.getIsFlipped() ? 0.2 : 1 }}
+                    />
+                </div>
             }
         </div>
     )
