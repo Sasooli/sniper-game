@@ -13,7 +13,7 @@ export enum ClickModes {
   FLIP_PIECE
 }
 
-export const MAXBOARDSIZE = 10;
+export const MAXBOARDSIZE = 20;
 
 function App() {
   //TODO: remove this hard-coded terrain & piece setup
