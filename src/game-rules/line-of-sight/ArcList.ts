@@ -10,10 +10,10 @@ export default class ArcList{
         this.isUniversal = false;
     }
 
-    public containsDirection(direction: Direction): boolean {
+    public strictlyContains(direction: Direction): boolean {
         if (this.isUniversal) return true;
         return this.arcs
-            .map(arc => arc.containsDirection(direction))
+            .map(arc => arc.strictlyContains(direction))
             .includes(true);
     }
 
@@ -23,14 +23,14 @@ export default class ArcList{
         let endArc: Arc | null = null;
 
         for (let arc of this.arcs) {
-            if (arc.containsDirection(arcToMerge.start)) startArc = arc;
-            if (arc.containsDirection(arcToMerge.end)) endArc = arc;
+            if (arc.looselyContains(arcToMerge.start)) startArc = arc;
+            if (arc.looselyContains(arcToMerge.end)) endArc = arc;
         }
 
         if (this.isUniversal) {
             return;
         } else if (startArc && endArc && startArc === endArc) {
-            if (!new Arc(startArc.start, endArc.end).containsDirection(arcToMerge.start)) {
+            if (!new Arc(startArc.start, arcToMerge.end).looselyContains(arcToMerge.start)) {
                 this.arcs = [];
                 this.isUniversal = true;
             }
@@ -48,11 +48,15 @@ export default class ArcList{
     private addArcAndTrimList(arcToAdd: Arc) {
         const newArcs: Arc[] = [];
         for (let arc of this.arcs) {
-            if (!arcToAdd.containsDirection(arc.start)) {
+            if (!arcToAdd.looselyContains(arc.start)) {
                 newArcs.push(arc)
             }
         }
         newArcs.push(arcToAdd);
         this.arcs = newArcs;
+    }
+
+    public getLength() {
+        return this.isUniversal ? -1 : this.arcs.length;
     }
 }
