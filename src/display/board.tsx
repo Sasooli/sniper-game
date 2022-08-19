@@ -7,9 +7,12 @@ export type BoardProps = {
     boardState: BoardState;
     onSquareClick: Function;
     zoomLevel: number;
+    lineOfSight?: boolean[][];
+    showLineOfSight: boolean;
 }
+// TODO: make a LineOfSight type
 
-function Board({boardState, onSquareClick, zoomLevel}: BoardProps) {
+function Board({boardState, onSquareClick, zoomLevel, lineOfSight, showLineOfSight}: BoardProps) {
     const terrain = boardState.getAllTerrain();
     const pieces = boardState.getAllPieces();
     return (
@@ -23,6 +26,7 @@ function Board({boardState, onSquareClick, zoomLevel}: BoardProps) {
                         key={`square-${colIndex}-${rowIndex}`}
                         onClick={() => onSquareClick(colIndex, rowIndex)}
                         zoomLevel={zoomLevel}
+                        isHighlighted={showLineOfSight && !!lineOfSight && lineOfSight[colIndex][rowIndex]}
                     />
                     )}
                 </div>

@@ -10,9 +10,10 @@ export type SquareProps = {
     piece?: GamePiece;
     onClick: Function;
     zoomLevel: number;
+    isHighlighted: boolean;
 }
 
-function Square({terrainType, piece, onClick, zoomLevel}: SquareProps) {
+function Square({terrainType, piece, onClick, zoomLevel, isHighlighted}: SquareProps) {
 
     const scaledSizeString = (baseSize: number) => `${baseSize * zoomLevel}px`;
 
@@ -35,7 +36,8 @@ function Square({terrainType, piece, onClick, zoomLevel}: SquareProps) {
                  borderRadius: scaledSizeString(3),
                  width: scaledSizeString(60),
                  height: scaledSizeString(60),
-                 margin: scaledSizeString(2)
+                 margin: scaledSizeString(2),
+                 backgroundColor: isHighlighted ? 'lightgreen': ''
              }}
         >
             {terrainIcon && <FontAwesomeIcon icon={terrainIcon} className='terrain-icon' style={{fontSize: scaledSizeString(45)}} />}

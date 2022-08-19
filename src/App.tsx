@@ -5,12 +5,14 @@ import Board from './display/board';
 import BoardState, {TerrainTypes} from './game-state/BoardState';
 import GamePiece, {PieceType} from './game-objects/GamePiece';
 import Controls from './display/controls';
+import LineOfSight from "./game-rules/line-of-sight/LineOfSight";
 
 export enum ClickModes {
   NONE,
   SET_TERRAIN,
   SET_PIECE,
-  FLIP_PIECE
+  FLIP_PIECE,
+  SHOW_LOS
 }
 
 export const MAXBOARDSIZE = 20;
@@ -40,6 +42,7 @@ function App() {
   const [ terrainMode, setTerrainMode ] = useState<TerrainTypes>(TerrainTypes.Open);
   const [ pieceMode, setPieceMode ] = useState<PieceType>(PieceType.None);
   const [ pieceFlippedMode, setPieceFlippedMode ] = useState<boolean>(false);
+  const [ lineOfSight, setLineOfSight ] = useState<boolean[][]>();
 
   const squareClick = (x: number, y: number) => {
     let newBoardState = cloneDeep(boardState);
@@ -58,6 +61,9 @@ function App() {
         newBoardState.setTerrain(x, y, terrainMode);
         setBoardState(newBoardState);
         break;
+      case ClickModes.SHOW_LOS:
+        setLineOfSight(LineOfSight.findLinesOfSight(boardState, x, y));
+        break;
       case ClickModes.NONE:
     }
   }
@@ -72,7 +78,13 @@ function App() {
           pieceFlippedMode={pieceFlippedMode} setPieceFlippedMode={setPieceFlippedMode}
           zoomLevel={zoomLevel} setZoomLevel={setZoomLevel}
       />
-      <Board boardState={boardState} onSquareClick={squareClick} zoomLevel={zoomLevel} />
+      <Board
+        boardState={boardState}
+        onSquareClick={squareClick}
+        zoomLevel={zoomLevel}
+        lineOfSight={lineOfSight}
+        showLineOfSight={clickMode === ClickModes.SHOW_LOS}
+      />
     </div>
   );
 }

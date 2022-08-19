@@ -49,6 +49,18 @@ function PieceControls({pieceMode, setPieceMode, clickMode, setClickMode, pieceF
             <div className='piece-button-text'>Flip Piece</div>
         </button>;
 
+  const losButton =
+    <button
+      onClick={() => {setClickMode(ClickModes.SHOW_LOS );}}
+      className={`piece-button ${clickMode === ClickModes.SHOW_LOS
+        ? 'piece-button-active'
+        : 'piece-button-inactive'}`}
+    >
+      {/* TODO: find correct icon*/}
+      <FontAwesomeIcon icon={faCrosshairs} className='piece-button-icon' />
+      <div className='piece-button-text'>Show LoS</div>
+    </button>;
+
     const cancelButton =
         <button
             onClick={() => {setClickMode(ClickModes.NONE );}}
@@ -59,16 +71,17 @@ function PieceControls({pieceMode, setPieceMode, clickMode, setClickMode, pieceF
         </button>;
 
     return (
-        <div className={'terrain-controls-container'}>
-            <p className={'controls-label'}>Place<br />Piece</p>
-            {addPieceButton(PieceType.None, 'Clear', undefined, false)}
-            {addPieceButton(PieceType.Soldier, 'Soldier', faWalking, false)}
-            {addPieceButton(PieceType.Sniper, 'Sniper', faCrosshairs, false)}
-            {addPieceButton(PieceType.Sniper, 'Sniper (flipped)', faCrosshairs, true)}
-            {cancelButton}
-            {flipPieceButton}
-            {/* TODO: get this icon, text from the piecetype*/}
-        </div>
+      <div className={'terrain-controls-container'}>
+        <p className={'controls-label'}>Place<br />Piece</p>
+        {addPieceButton(PieceType.None, 'Clear', undefined, false)}
+        {addPieceButton(PieceType.Soldier, 'Soldier', faWalking, false)}
+        {addPieceButton(PieceType.Sniper, 'Sniper', faCrosshairs, false)}
+        {addPieceButton(PieceType.Sniper, 'Sniper (flipped)', faCrosshairs, true)}
+        {cancelButton}
+        {flipPieceButton}
+        {losButton}
+        {/* TODO: get this icon, text from the piecetype*/}
+      </div>
     )
 }
 
