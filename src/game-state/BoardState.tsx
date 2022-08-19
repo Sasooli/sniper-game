@@ -23,8 +23,8 @@ export default class BoardState {
     constructor(boardWidth: number, boardHeight: number) {
         this._boardWidth = boardWidth;
         this._boardHeight = boardHeight;
-        this.terrain = Array(boardWidth).fill(0).map(() => Array(boardHeight).fill(TerrainTypes.Open));
-        this.pieces = Array(boardWidth).fill(0).map(() => Array(boardHeight).fill(undefined));
+        this.terrain = Array(boardWidth).fill(null).map(() => Array(boardHeight).fill(TerrainTypes.Open));
+        this.pieces = Array(boardWidth).fill(null).map(() => Array(boardHeight).fill(undefined));
     }
 
     public getPiece(x: number, y: number): GamePiece | undefined {
@@ -117,5 +117,9 @@ export default class BoardState {
         this.terrain.pop();
         this.pieces.pop();
         this._boardWidth--;
+    }
+
+    public validateCoordinates(x: number, y: number): boolean {
+        return (x >= 0 && x < this.boardWidth && y >= 0 && y < this.boardHeight)
     }
 }
