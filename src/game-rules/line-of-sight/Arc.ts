@@ -55,8 +55,10 @@ export default class Arc {
         } else {
             if (x_candidate * x_end > 0) {
                 return gtr(grad_candidate, grad_end);
-            } else {
+            } else if (x_candidate * x_end < 0) {
                 return gtr(grad_start, grad_candidate);
+            } else {
+                return (y_candidate * x_end > 0);
             }
         }
     }
