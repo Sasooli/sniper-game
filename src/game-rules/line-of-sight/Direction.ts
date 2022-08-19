@@ -18,8 +18,6 @@ export default class Direction {
     }
 
     public constructor(x: number, y: number) {
-        if (x === 0) throw new Error("invalid argument: x cannot be 0");
-        if (y === 0) throw new Error("invalid argument: y cannot be 0");
         this._x = x;
         this._y = y;
     }

@@ -12,6 +12,7 @@ export default class Arc {
     }
 
     public constructor(start: Direction, end: Direction) {
+        if (start.x * start.y * end.x * end.y === 0) throw new Error("invalid argument: arc directions must have non-0 coords");
         this._start = start;
         this._end = end;
     }
